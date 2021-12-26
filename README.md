@@ -1,1 +1,1 @@
-The game four in a row in HTML,CSS and JavaScript
+The game connect 4 create with HTML,CSS and JavaScript
