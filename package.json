@@ -1,0 +1,21 @@
+{
+  "name": "four-in-a-row",
+  "version": "1.0.0",
+  "description": "The game four in a row",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "Game",
+    "Four",
+    "Row"
+  ],
+  "author": "Artur Berlikowski",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}
