@@ -11,6 +11,8 @@ app.listen(port, () => {
   console.log(`Express JS listening on port ${port}`);
 });
 
+let home = require(path.resolve(__dirname + '/routes/home.js'));
 let game = require(path.resolve(__dirname + '/routes/game.js'));
 
-app.use('/', game);
+app.use('/', home);
+app.use('/game', game);
