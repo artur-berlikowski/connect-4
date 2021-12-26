@@ -1,15 +1,15 @@
 {
-  "name": "four-in-a-row",
+  "name": "connect-4",
   "version": "1.0.0",
-  "description": "The game four in a row",
+  "description": "The game connect 4",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js"
   },
   "keywords": [
     "Game",
-    "Four",
-    "Row"
+    "Connect",
+    "4"
   ],
   "author": "Artur Berlikowski",
   "license": "ISC",
