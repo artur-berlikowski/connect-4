@@ -1,0 +1,14 @@
+.navbar {
+  background: #2e49d0;
+}
+
+.navbar .nav-link, .navbar .nav-link:active, .navbar .nav-link:focus {
+  color: yellow;
+  font-family: 'Bebas Neue';
+  font-size: 3.5vh;
+}
+
+.navbar .nav-link:hover {
+  color: white;
+  text-decoration: underline;
+}
