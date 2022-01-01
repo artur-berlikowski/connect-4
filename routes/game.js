@@ -3,15 +3,29 @@ const express = require('express');
 let router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('game');
+  res.render('index', {
+    partials: {
+      main: 'partials/game'
+    }
+  });
 });
 
 router.get('/rules', (req, res) => {
-  res.send('rules');
+  res.render('index', {
+    partials: {
+      nav: 'partials/navbar',
+      main: 'partials/rules'
+    }
+  });
 });
 
-router.get('/leaderboard', (req, res) => {
-  res.send('leaderboard');
+router.get('/high_scores', (req, res) => {
+  res.render('index', {
+    partials: {
+      nav: 'partials/navbar',
+      main: 'partials/high_scores'
+    }
+  });
 });
 
 module.exports = router;
