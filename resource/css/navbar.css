@@ -1,5 +1,19 @@
 .navbar {
-  background: #2e49d0;
+  background: rgb(46,73,208);
+  background: linear-gradient(0deg, rgba(46,73,208,1) 0%, rgba(46,73,208,1) 50%, rgba(53,74,179,1) 100%);
+}
+
+.navbar .navbar-brand {
+  font-family: 'Knewave';
+}
+
+.navbar .navbar-brand span {
+  color: white;
+  font-size: 2.5;
+}
+
+.navbar .navbar-brand span:hover {
+  color: #e8ecff
 }
 
 .navbar .nav-link, .navbar .nav-link:active, .navbar .nav-link:focus {

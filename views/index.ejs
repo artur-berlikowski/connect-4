@@ -11,10 +11,24 @@
 </head>
 
 <body>
-  <%- include('partials/navbar'); %>
-    <script type="text/javascript" src="/library/jquery/3.6.0/jquery.js"></script>
-    <script type="text/javascript" src="/library/popper/2.11.0/popper.js"></script>
-    <script type="text/javascript" src="/library/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  <navigation>
+    <% if(typeof partials.nav !=='undefined' ) { %>
+      <%- include(partials.nav) %>
+        <% } %>
+  </navigation>
+  <main class="container">
+    <% if(typeof partials.main !=='undefined' ) { %>
+      <%- include(partials.main) %>
+        <% } %>
+  </main>
+  <footer>
+    <% if(typeof partials.footer !=='undefined' ) { %>
+      <%- include(partials.footer) %>
+        <% } %>
+  </footer>
+  <script type="text/javascript" src="/library/jquery/3.6.0/jquery.js"></script>
+  <script type="text/javascript" src="/library/popper/2.11.0/popper.js"></script>
+  <script type="text/javascript" src="/library/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
