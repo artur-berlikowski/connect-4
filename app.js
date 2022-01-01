@@ -11,8 +11,37 @@ app.listen(port, () => {
   console.log(`Express JS listening on port ${port}`);
 });
 
-let home = require(path.resolve(__dirname + '/routes/home.js'));
-let game = require(path.resolve(__dirname + '/routes/game.js'));
+app.get('/', (req, res) => {
+  res.render('index', {
+    partials: {
+      nav: 'partials/navbar',
+      main: 'partials/home'
+    }
+  });
+});
 
-app.use('/', home);
-app.use('/game', game);
+app.get('/game', (req, res) => {
+  res.render('index', {
+    partials: {
+      main: 'partials/game'
+    }
+  });
+});
+
+app.get('/rules', (req, res) => {
+  res.render('index', {
+    partials: {
+      nav: 'partials/navbar',
+      main: 'partials/rules'
+    }
+  });
+});
+
+app.get('/high_scores', (req, res) => {
+  res.render('index', {
+    partials: {
+      nav: 'partials/navbar',
+      main: 'partials/high_scores'
+    }
+  });
+});
