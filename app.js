@@ -24,7 +24,10 @@ app.get('/game', (req, res) => {
   res.render('index', {
     partials: {
       main: 'partials/game'
-    }
+    },
+    scripts: [
+      'game'
+    ]
   });
 });
 
