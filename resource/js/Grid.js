@@ -20,7 +20,7 @@ export default class Grid {
     let $html = ``;
     this.grid.forEach((element, index) => {
       $html += `<tr id="${index}">`;
-      element.forEach((element) => $html += `<td id="${element}"></td>`);
+      element.forEach((element) => $html += `<td id="${element}"><img src="/image/placeholder.png"></td>`);
       $html += `</tr>`;
     });
     return $html;
