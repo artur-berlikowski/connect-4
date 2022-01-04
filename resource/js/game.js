@@ -4,14 +4,14 @@ const gridWidth = 7;
 const gridHeight = 6;
 
 let player1 = {
-  name: 'Player 1',
+  name: 'Artur',
   color: 'red'
 }
 let player2 = {
-  name: 'Player 2',
+  name: 'Jack',
   color: 'yellow'
 }
-let currentPlayer = player1;
+let currentPlayer = player2;
 
 let grid = new Grid(gridWidth, gridHeight);
 
@@ -59,8 +59,9 @@ async function addListeners() {
   );
 
   await $('#board tr th').on('click', function () {
-    let $this = $(this);
-    alert($this.attr('id'));
+    let placed = grid.placeMarker($(this).attr('id'), currentPlayer.color);
+    updateBoard();
+    console.log(placed);
   });
 }
 
@@ -73,6 +74,17 @@ async function start() {
   $name2.html(player2.name);
   $name2.addClass(player2.color);
 
+}
+
+async function updateBoard() {
+  let gridData = grid.grid;
+  for (let y = 0; y < gridHeight; y++) {
+    for (let x = 0; x < gridWidth; x++) {
+      let cell = gridData[y][x];
+      let $cell = await $(`tr[id="${y}"] td[id="${(y * gridWidth) + x}"]`);
+      if (cell.color !== 'none') $cell.addClass(cell.color + '-marker');
+    }
+  }
 }
 
 //$(window).resize(function () { adjustBoard(); });

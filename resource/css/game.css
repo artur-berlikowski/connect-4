@@ -36,6 +36,8 @@
   margin: 0;
   padding: 0;
   border: 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 #board tr td:first-child {
@@ -81,4 +83,12 @@
   background: linear-gradient(0deg, rgba(213,200,2,1) 0%, rgba(242,238,42,1) 50%, rgba(213,200,2,1) 100%); 
   border: 6px solid #9d950a;
   color: #755000;
+}
+
+.red-marker {
+  background: url('./../image/marker_red.png');
+}
+
+.yellow-marker {
+  background: url('./../image/marker_yellow.png');
 }
