@@ -1,5 +1,4 @@
 import Grid from './Grid.js';
-import Player from './Player.js';
 
 export default class Game {
   constructor(gridWidth, gridHeight) {
@@ -26,24 +25,15 @@ export default class Game {
 
   checkHorizontalWin(player) {
     for (let row of this.grid.data) {
-      let lastCountedCell = null;
       let count = 0;
       for (let cell of row) {
         if (cell.color === player.color && cell.occupied === true) {
-          if (lastCountedCell === null) {
-            lastCountedCell = cell;
-            count++;
-          } else if (row.indexOf(lastCountedCell) === row.indexOf(cell) - 1) {
-            lastCountedCell = cell;
-            count++;
-          } else {
-            lastCountedCell = cell;
-            count = 1;
-          }
+          count++;
+          if (count == 4) return true;
+        } else {
+          count = 0;
         }
       }
-      if (count > 4) return true;
-      else count = 0;
     }
     return false;
   }
@@ -52,34 +42,77 @@ export default class Game {
     let data = this.grid.data;
 
     for (let x = 0; x < this.grid.width; x++) {
-      let lastRow = null;
-      let lastCell = null;
       let count = 0;
       for (let y = 0; y < this.grid.height; y++) {
         let currentCell = data[y][x];
         if (currentCell.color === player.color && currentCell.occupied === true) {
-          if (lastRow === null && lastCell === null) {
-            lastRow = y;
-            lastCell = x;
-            count++;
-          } else if (lastRow = y - 1 && lastCell == x) {
-            lastRow = y;
-            lastCell = x;
-            count++;
-          } else {
-            lastRow = y;
-            lastCell = x;
-            count = 1
-          }
+          count++;
+          if (count == 4) return true;
+        } else {
+          count = 0;
         }
       }
-      if (count == 4) return true;
-      else count = 0;
     }
     return false;
   }
 
-  checkDiagonalWin() {
+  checkDiagonalWin(player) {
+    let data = this.grid.data;
+    let yMax = this.grid.height;
+    let xMax = this.grid.width;
 
+    //Check diagonally from top left to bottom right
+    for (let row = 0; row < yMax - 4; row++) {
+      let count = 0;
+      let y, x;
+      for (y = row, x = 0; y < yMax && x < xMax; y++, x++) {
+        let cell = data[y][x];
+        if (cell.color === player.color) {
+          count++;
+          if (count >= 4) return true;
+        } else {
+          count = 0;
+        }
+      }
+    }
+    for (let col = 1; col < xMax - 4; col++) {
+      let count = 0;
+      let y, x;
+      for (y = 0, x = col; y < yMax && x < xMax; y++, x++) {
+        let cell = data[y][x];
+        if (cell.color === player.color) {
+          count++;
+          if (count >= 4) return true;
+        } else {
+          count = 0;
+        }
+      }
+    }
+    //Check diagonally from top right to bottom left
+    for (let row = 0; row < yMax - 4; row++) {
+      let count = 0;
+      let y, x;
+      for (y = row, x = xMax - 1; y < yMax && x >= 0; y++, x--) {
+        let cell = data[y][x];
+        if (cell.color === player.color) {
+          count++
+          if (count >= 4) return true;
+        } else {
+          count = 0;
+        }
+      }
+    }
+    for (let col = xMax - 2; col >= 3; col--) {
+      let count = 0;
+      let y, x;
+      for (y = 0, x = col; y < yMax && x >= 0; y++, x--) {
+        let cell = data[y][x];
+        if (cell.color === player.color) {
+          count++;
+          if (count >= 4) return true;
+        }
+      }
+    }
+    return false;
   }
 }
