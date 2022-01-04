@@ -33,7 +33,7 @@ async function start() {
     $playerName.html(player.name);
   });
 
-  updatePlayerInfo();
+  updatePlayers();
 
   await startTimer();
 }
@@ -76,6 +76,11 @@ async function addListeners() {
       updateBoard();
       nextPlayer();
     }
+    $(this).css({
+      'background': currentPlayer.color === 'red' ? 'url("/image/marker_red.png")' : 'url("/image/marker_yellow.png")',
+      'background-repeat': 'no-repeat',
+      'background-size': '100% 100%'
+    });
   });
 }
 
@@ -97,10 +102,10 @@ async function nextPlayer() {
   } else {
     currentPlayer = players[indexOfCurrentPlayer + 1];
   }
-  updatePlayerInfo();
+  updatePlayers();
 }
 
-async function updatePlayerInfo() {
+async function updatePlayers() {
   let $message = await $('#message');
 
   players.forEach(async function (player, index) {
@@ -112,6 +117,11 @@ async function updatePlayerInfo() {
       $playerName.removeClass('active');
       $playerName.addClass(player.color);
     }
+  });
+
+  await $('#board th').each(async function (index, element) {
+    let $this = await $(this);
+    let colorToCheck = currentPlayer.color === 'red' ? 'yellow' : 'red';
   });
 
   $message.html("It's your turn " + currentPlayer.name + ", do your worst!");

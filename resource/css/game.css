@@ -25,7 +25,8 @@
   margin: 0;
   padding: 0;
   border-bottom: 6px solid #2439a0;
-  cursor: pointer;
+  background-repeat: 'no-repeat';
+  background-size: '100% 100%';
 }
 
 #board tr th:hover {
@@ -102,4 +103,12 @@
 
 .yellow-marker {
   background: url('./../image/marker_yellow.png');
+}
+
+.choice-red {
+  background: url("./../image/marker_red.png");
+}
+
+.choice-yellow {
+  background: url("/image/marker_yellow.png");
 }
