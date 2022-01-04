@@ -1,6 +1,8 @@
+import Game from './Game.js';
 import Grid from './Grid.js';
 import Player from './Player.js';
 
+const game = new Game(7, 6);
 const gridWidth = 7;
 const gridHeight = 6;
 
@@ -9,33 +11,49 @@ let currentPlayer;
 
 let grid = new Grid(gridWidth, gridHeight);
 
-init();
+newGame();
 
-async function init() {
-  let $board = await $('#board');
-
-  $board.append(grid.render());
-
-  adjustBoard();
-  addListeners();
-  start();
+async function newGame() {
+  await createBoard();
+  await createPlayers();
+  await updatePlayers();
+  await startTimer();
 }
 
-async function start() {
-  players = [];
+async function createBoard() {
+  let $board = await $('#board');
 
-  players.push(new Player('Artur', 'red'));
-  players.push(new Player('Jack', 'yellow'));
-  currentPlayer = players[0];
+  $board.append(game.grid.render());
 
-  players.forEach(async function (player, index) {
+  await adjustBoard();
+  await addListeners();
+}
+
+async function createPlayers() {
+  let player1 = new Player('Artur', 'red');
+  let player2 = new Player('Jack', 'yellow');
+
+  game.addPlayer(player1);
+  game.addPlayer(player2);
+  game.setCurrentPlayer(player1);
+}
+
+async function updatePlayers() {
+  let $message = await $('#message');
+
+  game.players.forEach(async function (player, index) {
     let $playerName = await $(`#player${index + 1}_name`);
-    $playerName.html(player.name);
+    if (game.currentPlayer === player) {
+      $playerName.removeClass(player.color);
+      $playerName.addClass('active');
+    } else {
+      $playerName.removeClass('active');
+      $playerName.addClass(player.color);
+    }
+    if ($playerName.html() !== player.name) $playerName.html(player.name);
   });
 
-  updatePlayers();
-
-  await startTimer();
+  $message.html("It's your turn " + game.currentPlayer.name + ", do your worst!");
 }
 
 async function adjustBoard() {
@@ -59,7 +77,7 @@ async function addListeners() {
   await $('#board tr th').hover(
     function () {
       $(this).css({
-        'background': currentPlayer.color === 'red' ? 'url("/image/marker_red.png")' : 'url("/image/marker_yellow.png")',
+        'background': game.currentPlayer.color === 'red' ? 'url("/image/marker_red.png")' : 'url("/image/marker_yellow.png")',
         'background-repeat': 'no-repeat',
         'background-size': '100% 100%'
       });
@@ -72,12 +90,13 @@ async function addListeners() {
   await $('#board tr th').on('click', function () {
     let colId = $(this).attr('id');
     if (!grid.columnIsFull(colId)) {
-      grid.placeMarker($(this).attr('id'), currentPlayer.color);
+      grid.placeMarker($(this).attr('id'), game.currentPlayer.color);
       updateBoard();
-      nextPlayer();
+      game.nextPlayer();
+      updatePlayers();
     }
     $(this).css({
-      'background': currentPlayer.color === 'red' ? 'url("/image/marker_red.png")' : 'url("/image/marker_yellow.png")',
+      'background': game.currentPlayer.color === 'red' ? 'url("/image/marker_red.png")' : 'url("/image/marker_yellow.png")',
       'background-repeat': 'no-repeat',
       'background-size': '100% 100%'
     });
@@ -93,38 +112,6 @@ async function updateBoard() {
       if (cell.color !== 'none') $cell.addClass(cell.color + '-marker');
     }
   }
-}
-
-async function nextPlayer() {
-  let indexOfCurrentPlayer = players.indexOf(currentPlayer);
-  if (indexOfCurrentPlayer === players.length - 1) {
-    currentPlayer = players[0];
-  } else {
-    currentPlayer = players[indexOfCurrentPlayer + 1];
-  }
-  updatePlayers();
-}
-
-async function updatePlayers() {
-  let $message = await $('#message');
-
-  players.forEach(async function (player, index) {
-    let $playerName = await $(`#player${index + 1}_name`);
-    if (currentPlayer === player) {
-      $playerName.removeClass(player.color);
-      $playerName.addClass('active');
-    } else {
-      $playerName.removeClass('active');
-      $playerName.addClass(player.color);
-    }
-  });
-
-  await $('#board th').each(async function (index, element) {
-    let $this = await $(this);
-    let colorToCheck = currentPlayer.color === 'red' ? 'yellow' : 'red';
-  });
-
-  $message.html("It's your turn " + currentPlayer.name + ", do your worst!");
 }
 
 //$(window).resize(function () { adjustBoard(); });
