@@ -14,6 +14,8 @@ export default class Game {
 
   nextPlayer() { this.currentPlayer = this.players.indexOf(this.currentPlayer) === 0 ? this.players[1] : this.players[0]; }
 
+  getOpponent(player) { return this.players.indexOf(player) === 0 ? this.players[1] : this.players[0]; }
+
   checkWin() {
     for (let player of this.players) {
       if (this.checkHorizontalWin(player)) return player;

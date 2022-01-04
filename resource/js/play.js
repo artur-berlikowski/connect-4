@@ -85,9 +85,12 @@ async function addListeners() {
       game.grid.placeMarker($(this).attr('id'), game.currentPlayer.color);
       updateBoard();
       let victor = game.checkWin();
-      if (victor) announceVictor(victor);
-      game.nextPlayer();
-      updatePlayers();
+      if (victor) {
+        announceVictor(victor);
+      } else {
+        game.nextPlayer();
+        updatePlayers();
+      }
     }
     $(this).css({
       'background': game.currentPlayer.color === 'red' ? 'url("/image/marker_red.png")' : 'url("/image/marker_yellow.png")',
@@ -112,7 +115,18 @@ async function updateBoard() {
 }
 
 async function announceVictor(player) {
-  console.log(player.name);
+  stopTimer();
+
+  let $message = await $('#message');
+  let $timer = await $('#timer');
+  let name = player.name;
+  let color = player.color;
+  let time = $timer.html();
+  let looser = game.getOpponent(player);
+
+  resetTimer();
+
+  $message.html('Sorry ' + looser.name + ', looks like ' + name + ' beat you to it.<br> He won with ' + color + ' color and the time ' + time + '.<br>Congratulations!!!');
 }
 
 //$(window).resize(function () { adjustBoard(); });
