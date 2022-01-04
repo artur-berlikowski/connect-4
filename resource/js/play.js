@@ -22,8 +22,7 @@ async function init() {
 }
 
 async function start() {
-  let $name1 = await $('#name1');
-  let $name2 = await $('#name2');
+  let $message = await $('#message');
 
   players = [];
 
@@ -34,8 +33,12 @@ async function start() {
   players.forEach(async function (player, index) {
     let $playerName = await $(`#player${index + 1}_name`);
     $playerName.html(player.name);
-    $playerName.addClass(player.color);
+    $playerName.addClass(currentPlayer === player ? 'active' : player.color);
   });
+
+  $message.html("It's your turn " + currentPlayer.name + ", do your worst!");
+
+  await startTimer();
 }
 
 async function adjustBoard() {
@@ -70,9 +73,8 @@ async function addListeners() {
   );
 
   await $('#board tr th').on('click', function () {
-    let placed = grid.placeMarker($(this).attr('id'), currentPlayer.color);
+    grid.placeMarker($(this).attr('id'), currentPlayer.color);
     updateBoard();
-    console.log(placed);
   });
 }
 

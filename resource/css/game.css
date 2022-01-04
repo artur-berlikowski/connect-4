@@ -61,8 +61,12 @@
   text-align: center;
 }
 
-#info #title {
+#info #message {
   font-size: 4.5vh;
+}
+
+#info #timer {
+  font-size: 7vh;
 }
 
 .playerName {
@@ -83,6 +87,13 @@
   background: linear-gradient(0deg, rgba(213,200,2,1) 0%, rgba(242,238,42,1) 50%, rgba(213,200,2,1) 100%); 
   border: 6px solid #9d950a;
   color: #755000;
+}
+
+.active {
+  background: rgb(136,213,2);
+  background: linear-gradient(0deg, rgba(136,213,2,1) 0%, rgba(127,242,42,1) 50%, rgba(136,213,2,1) 100%); 
+  border: 6px solid #0a9d11;
+  color: #007525;
 }
 
 .red-marker {

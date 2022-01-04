@@ -26,7 +26,10 @@ app.get('/game', (req, res) => {
       main: 'partials/game'
     },
     scripts: [
-      'game'
+      'timer'
+    ],
+    modules: [
+      'play'
     ]
   });
 });

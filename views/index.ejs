@@ -31,9 +31,14 @@
   <script type="text/javascript" src="/library/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
   <% if(typeof scripts !=='undefined' ) { %>
     <% for(let script of scripts) { %>
-      <script src='/js/<%= script %>.js' type='module'></script>
+      <script src='/js/<%= script %>.js'></script>
       <% } %>
         <% } %>
+          <% if(typeof modules !=='undefined' ) { %>
+            <% for(let module of modules) { %>
+              <script src='/js/<%= module %>.js' type='module'></script>
+              <% } %>
+                <% } %>
 </body>
 
 </html>
