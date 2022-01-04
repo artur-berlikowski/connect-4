@@ -1,17 +1,11 @@
 import Grid from './Grid.js';
+import Player from './Player.js';
 
 const gridWidth = 7;
 const gridHeight = 6;
 
-let player1 = {
-  name: 'Artur',
-  color: 'red'
-}
-let player2 = {
-  name: 'Jack',
-  color: 'yellow'
-}
-let currentPlayer = player2;
+let players;
+let currentPlayer;
 
 let grid = new Grid(gridWidth, gridHeight);
 
@@ -25,6 +19,23 @@ async function init() {
   adjustBoard();
   addListeners();
   start();
+}
+
+async function start() {
+  let $name1 = await $('#name1');
+  let $name2 = await $('#name2');
+
+  players = [];
+
+  players.push(new Player('Artur', 'red'));
+  players.push(new Player('Jack', 'yellow'));
+  currentPlayer = players[0];
+
+  players.forEach(async function (player, index) {
+    let $playerName = await $(`#player${index + 1}_name`);
+    $playerName.html(player.name);
+    $playerName.addClass(player.color);
+  });
 }
 
 async function adjustBoard() {
@@ -63,17 +74,6 @@ async function addListeners() {
     updateBoard();
     console.log(placed);
   });
-}
-
-async function start() {
-  let $name1 = await $('#name1');
-  let $name2 = await $('#name2');
-
-  $name1.html(player1.name);
-  $name1.addClass(player1.color);
-  $name2.html(player2.name);
-  $name2.addClass(player2.color);
-
 }
 
 async function updateBoard() {
