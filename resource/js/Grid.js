@@ -12,7 +12,8 @@ export default class Grid {
       for (let x = 0; x < this.width; x++) {
         row.push({
           id: (y * this.width) + x,
-          color: 'none'
+          color: '',
+          occupied: false
         });
       }
       this.grid.push(row);
@@ -30,20 +31,30 @@ export default class Grid {
   }
 
   placeMarker(colId, color) {
-    this.grid.forEach((element, index) => {
-      let currentElement = element[colId];
+    this.grid.forEach((row, index) => {
+      let currentCell = row[colId];
       if (index < this.grid.length - 1) {
-        let nextElement = this.grid[index + 1][colId];
-        if (nextElement.color !== 'none') {
-          currentElement.color = color;
-          return;
+        let nextCell = this.grid[index + 1][colId];
+        if (index === 0 && nextCell.occupied === true) {
+          this.populateCell(currentCell, color);
+        } else if (index < this.grid.length - 1 && index > 0) {
+          let previousCell = this.grid[index - 1][colId];
+          if (nextCell.occupied === true && previousCell.occupied === false) {
+            this.populateCell(currentCell, color);
+          }
         }
-      } else {
-        if (currentElement.color === 'none') {
-          currentElement.color = color;
-          return;
-        }
+      } else if (currentCell.occupied === false) {
+        this.populateCell(currentCell, color);
       }
     });
+  }
+
+  populateCell(cell, color) {
+    cell.color = color;
+    cell.occupied = true;
+  }
+
+  columnIsFull(colId) {
+    return this.grid[0][colId].occupied;
   }
 }

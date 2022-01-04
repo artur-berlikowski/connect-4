@@ -22,8 +22,6 @@ async function init() {
 }
 
 async function start() {
-  let $message = await $('#message');
-
   players = [];
 
   players.push(new Player('Artur', 'red'));
@@ -33,10 +31,9 @@ async function start() {
   players.forEach(async function (player, index) {
     let $playerName = await $(`#player${index + 1}_name`);
     $playerName.html(player.name);
-    $playerName.addClass(currentPlayer === player ? 'active' : player.color);
   });
 
-  $message.html("It's your turn " + currentPlayer.name + ", do your worst!");
+  updatePlayerInfo();
 
   await startTimer();
 }
@@ -73,8 +70,12 @@ async function addListeners() {
   );
 
   await $('#board tr th').on('click', function () {
-    grid.placeMarker($(this).attr('id'), currentPlayer.color);
-    updateBoard();
+    let colId = $(this).attr('id');
+    if (!grid.columnIsFull(colId)) {
+      grid.placeMarker($(this).attr('id'), currentPlayer.color);
+      updateBoard();
+      nextPlayer();
+    }
   });
 }
 
@@ -87,6 +88,33 @@ async function updateBoard() {
       if (cell.color !== 'none') $cell.addClass(cell.color + '-marker');
     }
   }
+}
+
+async function nextPlayer() {
+  let indexOfCurrentPlayer = players.indexOf(currentPlayer);
+  if (indexOfCurrentPlayer === players.length - 1) {
+    currentPlayer = players[0];
+  } else {
+    currentPlayer = players[indexOfCurrentPlayer + 1];
+  }
+  updatePlayerInfo();
+}
+
+async function updatePlayerInfo() {
+  let $message = await $('#message');
+
+  players.forEach(async function (player, index) {
+    let $playerName = await $(`#player${index + 1}_name`);
+    if (currentPlayer === player) {
+      $playerName.removeClass(player.color);
+      $playerName.addClass('active');
+    } else {
+      $playerName.removeClass('active');
+      $playerName.addClass(player.color);
+    }
+  });
+
+  $message.html("It's your turn " + currentPlayer.name + ", do your worst!");
 }
 
 //$(window).resize(function () { adjustBoard(); });
