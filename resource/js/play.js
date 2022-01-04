@@ -84,6 +84,8 @@ async function addListeners() {
     if (!game.grid.columnIsFull(colId)) {
       game.grid.placeMarker($(this).attr('id'), game.currentPlayer.color);
       updateBoard();
+      let victor = game.checkWin();
+      if (victor) announceVictor(victor);
       game.nextPlayer();
       updatePlayers();
     }
@@ -103,11 +105,14 @@ async function updateBoard() {
   for (let y = 0; y < gridHeight; y++) {
     for (let x = 0; x < gridWidth; x++) {
       let cell = gridData[y][x];
-      console.log(cell);
       let $cell = await $(`tr[id="${y}"] td[id="${(y * gridWidth) + x}"]`);
       if (cell.color !== 'none') $cell.addClass(cell.color + '-marker');
     }
   }
+}
+
+async function announceVictor(player) {
+  console.log(player.name);
 }
 
 //$(window).resize(function () { adjustBoard(); });
