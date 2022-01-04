@@ -2,7 +2,7 @@ export default class Grid {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.grid = [];
+    this.data = [];
     this.createGrid();
   }
 
@@ -16,13 +16,13 @@ export default class Grid {
           occupied: false
         });
       }
-      this.grid.push(row);
+      this.data.push(row);
     }
   }
 
   render() {
     let $html = ``;
-    this.grid.forEach((element, index) => {
+    this.data.forEach((element, index) => {
       $html += `<tr id="${index}">`;
       element.forEach((element) => $html += `<td id="${element.id}"><img src="/image/placeholder.png"></td>`);
       $html += `</tr>`;
@@ -31,14 +31,14 @@ export default class Grid {
   }
 
   placeMarker(colId, color) {
-    this.grid.forEach((row, index) => {
+    this.data.forEach((row, index) => {
       let currentCell = row[colId];
-      if (index < this.grid.length - 1) {
-        let nextCell = this.grid[index + 1][colId];
+      if (index < this.data.length - 1) {
+        let nextCell = this.data[index + 1][colId];
         if (index === 0 && nextCell.occupied === true) {
           this.populateCell(currentCell, color);
-        } else if (index < this.grid.length - 1 && index > 0) {
-          let previousCell = this.grid[index - 1][colId];
+        } else if (index < this.data.length - 1 && index > 0) {
+          let previousCell = this.data[index - 1][colId];
           if (nextCell.occupied === true && previousCell.occupied === false) {
             this.populateCell(currentCell, color);
           }
@@ -55,6 +55,6 @@ export default class Grid {
   }
 
   columnIsFull(colId) {
-    return this.grid[0][colId].occupied;
+    return this.data[0][colId].occupied;
   }
 }
