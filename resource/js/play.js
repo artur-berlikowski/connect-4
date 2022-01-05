@@ -3,11 +3,54 @@ import Player from './Player.js';
 
 const game = new Game(7, 6);
 
-newGame();
+displaySelectionScreen();
 
-async function newGame() {
+async function displaySelectionScreen() {
+  let $selectionScreen = await $('#selection_screen');
+  let $game = await $('#game');
+  let $playButton = await $('#play_button');
+
+  $playButton.on('click', async function (event) {
+    event.preventDefault();
+    let namePlayerOne = await $('#input_player1').val();
+    let namePlayerTwo = await $('#input_player2').val();
+    if (await checkPlayerNameInput(namePlayerOne, namePlayerTwo)) {
+      await $selectionScreen.fadeOut(500, async function () {
+        await newGame(namePlayerOne, namePlayerTwo);
+        $game.fadeIn(500);
+        adjustBoard();
+      });
+    }
+  });
+
+  $game.hide();
+}
+
+async function checkPlayerNameInput(player1, player2) {
+  let $inputErrors = await $('#input_errors');
+  let unallowedCharacters = false;
+  let valid = true;
+
+  $inputErrors.html('');
+  if (emtpyString(player1)) { $inputErrors.append('You need to enter a name for player one.<br>'); valid = false; }
+  if (!testPlayerNameInput(player1)) { $inputErrors.append('The name of player one contains unallowed characters.<br>'); valid = false; unallowedCharacters = true; }
+  if (emtpyString(player2)) { $inputErrors.append('You need to enter a name for player two.<br>'); valid = false; }
+  if (!testPlayerNameInput(player2)) { $inputErrors.append('The name of player two contains unallowed characters.<br>'); valid = false; unallowedCharacters = true; }
+  if (unallowedCharacters) $inputErrors.append('Characters allowed are A-Z a-z 0-9 - _');
+  return valid;
+}
+
+function emtpyString(s) { return s === '' ? true : false; }
+
+//Allow only A-Z a-z and 0-9
+function testPlayerNameInput(s) {
+  let format = /^[a-z0-9-_]*$/i;
+  return format.test(s);
+}
+
+async function newGame(playerOneName, playerTwoName) {
   await createBoard();
-  await createPlayers();
+  await createPlayers(playerOneName, playerTwoName);
   await updatePlayers();
   await startTimer();
 }
@@ -21,9 +64,9 @@ async function createBoard() {
   await addListeners();
 }
 
-async function createPlayers() {
-  let player1 = new Player('Artur', 'red');
-  let player2 = new Player('Jack', 'yellow');
+async function createPlayers(playerOneName, playerTwoName) {
+  let player1 = new Player(playerOneName, 'red');
+  let player2 = new Player(playerTwoName, 'yellow');
 
   game.addPlayer(player1);
   game.addPlayer(player2);

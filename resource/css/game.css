@@ -1,3 +1,44 @@
+#selection_screen {
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  padding: 4vh;
+}
+
+#selection_screen .row {
+  height: 100%;
+}
+
+#selection_screen form {
+  width: 100%;
+  font-family: 'Bebas Neue';
+  font-size: 4.5vh;
+}
+
+#selection_screen #input_player1_label {
+  color: #990808;
+}
+
+#selection_screen #input_player2_label {
+  color: #9d950a;
+}
+
+#selection_screen .form-control {
+  text-align: center;
+  font-size: 6vh;
+  color: #2E49D0;
+}
+
+#selection_screen button {
+  padding: 2vh;
+  font-size: 4.5vh;
+}
+
+#selection_screen #input_errors {
+  font-size: 3.5vh;
+  padding: 2vh;
+}
+
 #game {
   height: 100vh;
   min-height: 100vh;

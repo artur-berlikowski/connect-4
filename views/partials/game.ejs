@@ -1,3 +1,24 @@
+<div id="selection_screen" class="container">
+  <div class="row">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+      <h1><img src="/image/logo.svg" height="42">Connect 4</h1>
+      <form class="d-flex flex-column justify-content-center text-center">
+        <div class="mb-3">
+          <label id="input_player1_label" for="input_player1" class="form-label">Player One <img
+              src="/image/marker_red.png" height="32"></label>
+          <input type="text" class="form-control" id="input_player1" aria-describedby="input_player1">
+        </div>
+        <div class="mb-3">
+          <label id="input_player2_label" for="input_player2" class="form-label">Player Two <img
+              src="/image/marker_yellow.png" height="32"></label>
+          <input type="text" class="form-control" id="input_player2" aria-describedby="input_player2">
+        </div>
+        <button id="play_button" class="btn btn-primary">Let's play</button>
+      </form>
+      <div id="input_errors" class="text-danger"></div>
+    </div>
+  </div>
+</div>
 <div id="game" class="container-fluid g-0">
   <div id="container" class="row g-0">
     <div id="board_container" class="col-md-8 d-flex justify-content-center">
